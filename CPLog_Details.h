@@ -305,7 +305,7 @@ namespace CPLog
 
 #endif
 
-#if CC_PLATFORM_ANDROID==CC_TARGET_PLATFORM
+#if defined(CC_TARGET_PLATFORM) && CC_PLATFORM_ANDROID==CC_TARGET_PLATFORM
 
 #include "platform/android/CCFileUtils-android.h"
 	struct CPLog_TXTOut_Cocos :public CPLog_Out
