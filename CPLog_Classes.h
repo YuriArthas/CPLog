@@ -77,15 +77,15 @@ namespace CPLog
 	struct CPLog_Data
 	{
 		//int _offset = 0;			//缩进
-		int _stepOffset = 4;		//每次缩进步长
-		int _initOffset = 0;		//初始缩进
+		int _stepOffset;		//每次缩进步长
+		int _initOffset;		//初始缩进
 
-		int _stepCount = 0;
+		int _stepCount;
 
 		CPLog_Data(int setpOffset,int initOffset)
 			: _stepOffset(setpOffset), _initOffset(initOffset){}
 
-		CPLog_Data(const CPLog_Data &data) = default;
+		//CPLog_Data(const CPLog_Data &data);
 
 		//忽略data中的_stepCount
 		//按照this->_stepCount换算出_offset,_stepOffset,_initOffset
@@ -106,7 +106,7 @@ namespace CPLog
 	{
 	private:
 		
-		CPLog_Data _data = { 4, 0 };
+		CPLog_Data _data;
 
 		
 		std::vector<CPLog_Out *> _outVec;
@@ -149,9 +149,9 @@ namespace CPLog
 
 		void printLog(const std::string &text, long type, bool bChangeLine)
 		{
-			for (auto p : _outVec)
+			for (auto p=_outVec.begin();p!=_outVec.end();++p)
 			{
-				p->printLog(text, type, bChangeLine);
+				(*p)->printLog(text, type, bChangeLine);
 			}
 		}
 
@@ -166,14 +166,15 @@ namespace CPLog
 		//virtual void _printLog(const std::string &text, long type, bool bChangeLine) = 0;
 
 		CPLog_Manager()
+		:_data(4,0)
 		{
 			init();
 		}
 		virtual ~CPLog_Manager()
 		{ 
-			for (auto streamPointer : _outVec) 
+			for (auto streamPointer= _outVec.begin();streamPointer!=_outVec.end();++streamPointer) 
 			{
-				delete streamPointer;
+				delete (*streamPointer);
 			}
 		}
 

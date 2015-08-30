@@ -6,7 +6,7 @@
 #ifdef _DEBUG
 #define USE_CPLOG
 #else
-
+#define USE_CPLOG
 #endif
 
 #include <stdio.h>
