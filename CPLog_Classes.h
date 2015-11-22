@@ -210,6 +210,8 @@ namespace CPLog
 namespace CPLog{
 	static const char *printToBuff(const char *pFormat, ...)
 	{
+		static boost::mutex m;
+		boost::lock_guard<boost::mutex> locker(m);
 		static char s_buff[4096] = {};
 		va_list args;
 		va_start(args, pFormat);
